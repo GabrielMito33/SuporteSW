@@ -1,0 +1,25 @@
+{
+    "creator": {
+        "token": "SEU_TOKEN_DO_BOT_CRIADOR_AQUI",
+        "admin_chat_id": "SEU_CHAT_ID_DE_ADMIN"
+    },
+    "configuracoes_padrao": {
+        "branco": {
+            "ausencias_minimas": 5,
+            "horarios_personalizados": [4, 7, 10],
+            "margem_seguranca": 1,
+            "max_sinais_por_dia": 50
+        },
+        "double": {
+            "ausencias_minimas": 7,
+            "horarios_personalizados": [2, 5, 8],
+            "margem_seguranca": 1,
+            "max_sinais_por_dia": 50
+        }
+    },
+    "api": {
+        "url": "https://blaze.bet.br/api/singleplayer-originals/originals/roulette_games/recent/1",
+        "timeout": 10,
+        "retry_attempts": 3
+    }
+} 

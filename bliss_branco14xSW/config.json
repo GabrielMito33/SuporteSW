@@ -1,0 +1,16 @@
+{
+    "telegram": {
+        "token": "7445187126:AAG7qXOahh-L9m7iZ6qzgtexjDOg-KpDNEw",
+        "chat_id": "-1003174414638"
+    },
+    "strategy": {
+        "ausencias_minimas": 0,
+        "horarios_personalizados": [4, 7, 10, 13],
+        "margem_seguranca": 1
+    },
+    "api": {
+        "url": "https://blaze.bet.br/api/singleplayer-originals/originals/roulette_games/recent/1",
+        "timeout": 10,
+        "retry_attempts": 3
+    }
+} 
