@@ -1,5 +1,8 @@
-V-2-V=P
-V-P-3=V
-5=V
-P-0=P
-P-4-P=V
+V-V-V=P
+P-P-P=V
+P-V-P-P=V
+V-P-V-V=P
+11-X-X=P
+P-V-P-V=P
+P-P-P-P-P=P
+V-V-V-V=V
