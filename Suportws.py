@@ -15,7 +15,7 @@ class WebScraper:
         self.url_API = "https://blaze.bet.br/api/singleplayer-originals/originals/roulette_games/recent/1"
         self.link = "[Clique aqui!](blaze.com/r/0aJYR6)"
         self.protection = True
-        self.gales = 0
+        self.gales = 1
         self.win_results = 0
         self.branco_results = 0
         self.loss_results = 0
