@@ -76,7 +76,6 @@ class WebScraper:
         message_id = self.bot.send_message(
             self.chat_id,
             text="""
-⚠️ ANALISANDO, FIQUE ATENTO!!!
 """,
         ).message_id
         self.message_ids = message_id
@@ -85,8 +84,7 @@ class WebScraper:
 
     def alert_gale(self):
         self.message_ids = self.bot.send_message(
-            self.chat_id, text=f"""⚠️ Vamos para o {self.count}ª GALE""").message_id
-
+            self.chat_id, text=f"""
         self.message_delete = True
         return
 
