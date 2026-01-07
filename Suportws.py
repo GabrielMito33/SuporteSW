@@ -94,12 +94,14 @@ class WebScraper:
             self.bot.delete_message(chat_id=self.chat_id, message_id=self.message_ids)
             self.message_delete = False
 
-    def send_sinal(self):
+    def send_sinal(self, ultima_pedra):
         self.analisar = False
         self.bot.send_message(chat_id=self.chat_id,text=(f"""
-⚡️SINAL GERADO⚡️
-🎯Apostar no: {self.direction_color}⚪️
-⚠️SEM MARTINGALE 
+✔️Entrada confirmada!
+
+➡️Apostar no {self.direction_color} Após {ultima_pedra}
+
+⚠️ 1 MARTINGALE 
 """))
         
         return
@@ -279,7 +281,7 @@ class WebScraper:
                             self.direction_color = "⚪️"  # Branco
                         
                         print(f"Direção da aposta: {self.direction_color}")
-                        self.send_sinal()
+                        self.send_sinal(finalnum[0])
                         return
                     
                     # Verificar alerta (condições parciais - remover última condição)
@@ -312,4 +314,3 @@ class WebScraper:
 
 scraper = WebScraper()
 scraper.start()
-
