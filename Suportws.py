@@ -95,23 +95,34 @@ class WebScraper:
             self.message_delete = False
 
     def send_sinal(self, ultima_pedra):
-        self.analisar = False
-        self.bot.send_message(chat_id=self.chat_id,text=(f"""
-✔️Entrada confirmada!
+    self.analisar = False
 
-➡️Apostar no {self.direction_color} Após {ultima_pedra}
+    # Escolhe o nome da cor de acordo com o emoji em self.direction_color
+    if self.direction_color == "🔴":
+        cor_texto = "Vermelho"
+    elif self.direction_color == "⚫️":
+        cor_texto = "Preto"
+    elif self.direction_color == "⚪️":
+        cor_texto = "Branco"
+    else:
+        cor_texto = "Cor"
 
+    self.bot.send_message(
+        chat_id=self.chat_id,
+        text=f"""
+Apostar no {cor_texto} {self.direction_color}
 ⚠️ 1 MARTINGALE 
-"""))
-        
-        return
+"""
+    )
+
+    return
 
     def martingale(self, result):
         if result == "WIN":
             print(f"WIN")
             self.win_results += 1
             self.max_hate += 1
-            self.bot.send_sticker(self.chat_id, sticker='CAACAgEAAxkBAAEPq5NpBAbVxmT2CQ79CRNEYoey8MYloQACPAIAAjH3mUfEHBvqNt4HmTYE')
+            self.bot.send_sticker(self.chat_id, sticker='')
 
         elif result == "LOSS":
             self.count += 1
@@ -120,7 +131,7 @@ class WebScraper:
                 print(f"LOSS")
                 self.loss_results += 1
                 self.max_hate = 0
-                self.bot.send_sticker(self.chat_id, sticker='CAACAgEAAxkBAAEPq5VpBAb4NFOSDHtBz4DVxkhl1Y9ekQACFwIAAng1kUdAdid1ISufKzYE')
+                self.bot.send_sticker(self.chat_id, sticker='')
 
             else:
                 print(f"Vamos para o {self.count}ª gale!")
@@ -131,7 +142,7 @@ class WebScraper:
             print(f"BRANCO")
             self.branco_results += 1
             self.max_hate += 1
-            self.bot.send_sticker(self.chat_id, sticker='CAACAgEAAxkBAAEPq5NpBAbVxmT2CQ79CRNEYoey8MYloQACPAIAAjH3mUfEHBvqNt4HmTYE')
+            self.bot.send_sticker(self.chat_id, sticker='')
 
         self.count = 0
         self.analisar = True
