@@ -89,12 +89,12 @@ class WebScraper:
         self.message_delete = True
         return
 
-    def delete(self):
+        def delete(self):
         if self.message_delete == True:
             self.bot.delete_message(chat_id=self.chat_id, message_id=self.message_ids)
             self.message_delete = False
 
-        def send_sinal(self, ultima_pedra):
+    def send_sinal(self, ultima_pedra):
         self.analisar = False
 
         # Escolhe o nome da cor de acordo com o emoji em self.direction_color
