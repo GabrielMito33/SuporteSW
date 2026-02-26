@@ -89,7 +89,7 @@ class WebScraper:
         self.message_delete = True
         return
 
-        def delete(self):
+    def delete(self):
         if self.message_delete == True:
             self.bot.delete_message(chat_id=self.chat_id, message_id=self.message_ids)
             self.message_delete = False
@@ -110,9 +110,9 @@ class WebScraper:
         self.bot.send_message(
             chat_id=self.chat_id,
             text=f"""
-Apostar no {cor_texto} {self.direction_color}
-⚠️ 1 MARTINGALE 
-"""
+    Apostar no {cor_texto} {self.direction_color}
+    ⚠️ 1 MARTINGALE 
+    """
         )
 
         return
