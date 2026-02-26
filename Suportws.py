@@ -94,28 +94,28 @@ class WebScraper:
             self.bot.delete_message(chat_id=self.chat_id, message_id=self.message_ids)
             self.message_delete = False
 
-    def send_sinal(self, ultima_pedra):
-    self.analisar = False
+        def send_sinal(self, ultima_pedra):
+        self.analisar = False
 
-    # Escolhe o nome da cor de acordo com o emoji em self.direction_color
-    if self.direction_color == "🔴":
-        cor_texto = "Vermelho"
-    elif self.direction_color == "⚫️":
-        cor_texto = "Preto"
-    elif self.direction_color == "⚪️":
-        cor_texto = "Branco"
-    else:
-        cor_texto = "Cor"
+        # Escolhe o nome da cor de acordo com o emoji em self.direction_color
+        if self.direction_color == "🔴":
+            cor_texto = "Vermelho"
+        elif self.direction_color == "⚫️":
+            cor_texto = "Preto"
+        elif self.direction_color == "⚪️":
+            cor_texto = "Branco"
+        else:
+            cor_texto = "Cor"
 
-    self.bot.send_message(
-        chat_id=self.chat_id,
-        text=f"""
+        self.bot.send_message(
+            chat_id=self.chat_id,
+            text=f"""
 Apostar no {cor_texto} {self.direction_color}
 ⚠️ 1 MARTINGALE 
 """
-    )
+        )
 
-    return
+        return
 
     def martingale(self, result):
         if result == "WIN":
