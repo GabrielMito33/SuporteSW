@@ -30,32 +30,31 @@ class WebScraper:
         self.check_date = self.date_now
   
     def restart(self):
+        # Reset diário do "placar" (feito a partir do loop principal em `start()`).
+        # Mantemos aqui apenas a limpeza de estado em memória para não bloquear o bot.
         if self.date_now != self.check_date:
-            print("Reiniciando bot!")
+            print("Reiniciando placar diário!")
             self.check_date = self.date_now
 
-            self.bot.send_sticker(
-                self.chat_id,
-                sticker="CAACAgEAAxkBAAEBbJJjXNcB92-_4vp2v0B3Plp9FONrDwACvgEAAsFWwUVjxQN4wmmSBCoE",
-            )
-            self.results()
-
-            # ZERA OS RESULTADOS
+            # ZERA OS RESULTADOS (placar)
             self.win_results = 0
             self.loss_results = 0
             self.branco_results = 0
             self.max_hate = 0
             self.win_hate = 0
-            time.sleep(10)
 
-            self.bot.send_sticker(
-                self.chat_id,
-                sticker="CAACAgEAAxkBAAEBPQZi-ziImRgbjqbDkPduogMKzv0zFgACbAQAAl4ByUUIjW-sdJsr6CkE",
-            )
-            self.results()
+            # ZERA CONTROLES QUE AFETAM O NOVO DIA
+            self.count = 0
+            self.direction_color = "None"
+            self.analisar = True
+
+            # Evita tentar deletar mensagens antigas após o reset (flag de controle)
+            self.message_delete = False
+            self.message_ids = None
+
             return True
-        else:
-            return False
+
+        return False
 
     def results(self):
         if self.win_results + self.branco_results + self.loss_results != 0:
@@ -109,10 +108,7 @@ class WebScraper:
 
         self.bot.send_message(
             chat_id=self.chat_id,
-            text=f"""
-    Apostar no {cor_texto} {self.direction_color}
-    ⚠️ 1 MARTINGALE 
-    """
+            text=f"🤹🏼‍♀️ *Entrada Confirmada* {self.direction_color}⚪️\n🎯 *SEM GALE*"
         )
 
         return
@@ -122,7 +118,7 @@ class WebScraper:
             print(f"WIN")
             self.win_results += 1
             self.max_hate += 1
-            self.bot.send_sticker(self.chat_id, sticker='')
+            self.bot.send_sticker(self.chat_id, sticker='CAACAgEAAxkBAAMPZrqPFR0VdwEGmMIhUvD-ftVCU9IAAm8CAAIhWPBGBpXDpqXsW8Q1BA')
 
         elif result == "LOSS":
             self.count += 1
@@ -131,7 +127,7 @@ class WebScraper:
                 print(f"LOSS")
                 self.loss_results += 1
                 self.max_hate = 0
-                self.bot.send_sticker(self.chat_id, sticker='')
+                self.bot.send_sticker(self.chat_id, sticker='CAACAgEAAxkBAAMTZrqPNtuE01MlUnK6yF68sSO6lc0AAsQCAAIEQehG-NlOMcjRGTM1BA')
 
             else:
                 print(f"Vamos para o {self.count}ª gale!")
@@ -142,7 +138,7 @@ class WebScraper:
             print(f"BRANCO")
             self.branco_results += 1
             self.max_hate += 1
-            self.bot.send_sticker(self.chat_id, sticker='')
+            self.bot.send_sticker(self.chat_id, sticker='CAACAgEAAxkBAAMPZrqPFR0VdwEGmMIhUvD-ftVCU9IAAm8CAAIhWPBGBpXDpqXsW8Q1BA')
 
         self.count = 0
         self.analisar = True
@@ -185,6 +181,7 @@ class WebScraper:
         while True:
             try:
                 self.date_now = str(datetime.datetime.now().strftime("%d/%m/%Y"))
+                self.restart()
 
                 results = []
                 time.sleep(1)
