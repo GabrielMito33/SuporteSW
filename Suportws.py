@@ -57,41 +57,49 @@ class WebScraper:
         return False
 
     def results(self):
-        if self.win_results + self.branco_results + self.loss_results != 0:
-            a = (
-                100
-                / (self.win_results + self.branco_results + self.loss_results)
-                * (self.win_results + self.branco_results)
-            )
-        else:
-            a = 0
-        self.win_hate = f"{a:,.2f}%"
+    if self.win_results + self.branco_results + self.loss_results != 0:
+        a = (
+            100
+            / (self.win_results + self.branco_results + self.loss_results)
+            * (self.win_results + self.branco_results)
+        )
+    else:
+        a = 0
+    self.win_hate = f"{a:,.2f}%"
 
-        self.bot.send_message(chat_id=self.chat_id,text=(f"""
-    """))
-        return
+    # Não enviar se estiver vazio
+    text = f"""{self.win_hate}"""
+    if text.strip():
+        self.bot.send_message(chat_id=self.chat_id, text=text)
+    return
 
-    def alert_sinal(self):
+def alert_sinal(self):
+    text = """ALERTA"""
+    if text.strip():
         message_id = self.bot.send_message(
             self.chat_id,
-            text="""
-""",
+            text=text,
         ).message_id
         self.message_ids = message_id
         self.message_delete = True
-        return
+    return
 
-    def alert_gale(self):
+def alert_gale(self):
+    text = f"""GALE"""
+    if text.strip():
         self.message_ids = self.bot.send_message(
-            self.chat_id, text=f"""""").message_id
-
+            self.chat_id, text=text).message_id
         self.message_delete = True
-        return
+    return
 
-    def delete(self):
-        if self.message_delete == True:
+def delete(self):
+    if self.message_delete == True:
+        try:
             self.bot.delete_message(chat_id=self.chat_id, message_id=self.message_ids)
-            self.message_delete = False
+        except:
+            pass
+        self.message_delete = False
+
 
     def send_sinal(self, ultima_pedra):
         self.analisar = False
