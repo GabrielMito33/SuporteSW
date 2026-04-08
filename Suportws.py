@@ -66,39 +66,39 @@ class WebScraper:
         else:
             a = 0
         self.win_hate = f"{a:,.2f}%"
-    
+
         # Não enviar se estiver vazio
         text = f"""{self.win_hate}"""
         if text.strip():
             self.bot.send_message(chat_id=self.chat_id, text=text)
         return
 
-def alert_sinal(self):
-    text = """ALERTA"""
-    if text.strip():
-        message_id = self.bot.send_message(
-            self.chat_id,
-            text=text,
-        ).message_id
-        self.message_ids = message_id
-        self.message_delete = True
-    return
+    def alert_sinal(self):
+        text = """ALERTA"""
+        if text.strip():
+            message_id = self.bot.send_message(
+                self.chat_id,
+                text=text,
+            ).message_id
+            self.message_ids = message_id
+            self.message_delete = True
+        return
 
-def alert_gale(self):
-    text = f"""GALE"""
-    if text.strip():
-        self.message_ids = self.bot.send_message(
-            self.chat_id, text=text).message_id
-        self.message_delete = True
-    return
+    def alert_gale(self):
+        text = f"""GALE"""
+        if text.strip():
+            self.message_ids = self.bot.send_message(
+                self.chat_id, text=text).message_id
+            self.message_delete = True
+        return
 
-def delete(self):
-    if self.message_delete == True:
-        try:
-            self.bot.delete_message(chat_id=self.chat_id, message_id=self.message_ids)
-        except:
-            pass
-        self.message_delete = False
+    def delete(self):
+        if self.message_delete == True:
+            try:
+                self.bot.delete_message(chat_id=self.chat_id, message_id=self.message_ids)
+            except:
+                pass
+            self.message_delete = False
 
 
     def send_sinal(self, ultima_pedra):
