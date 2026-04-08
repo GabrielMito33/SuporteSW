@@ -74,21 +74,19 @@ class WebScraper:
         return
 
     def alert_sinal(self):
-        text = """ALERTA"""
-        if text.strip():
+        if True:  # Sempre entra (sem verificação de texto vazio)
             message_id = self.bot.send_message(
                 self.chat_id,
-                text=text,
+                text="",
             ).message_id
             self.message_ids = message_id
             self.message_delete = True
         return
 
     def alert_gale(self):
-        text = f"""GALE"""
-        if text.strip():
+        if True:  # Sempre entra (sem verificação de texto vazio)
             self.message_ids = self.bot.send_message(
-                self.chat_id, text=text).message_id
+                self.chat_id, text="").message_id
             self.message_delete = True
         return
 
@@ -100,9 +98,9 @@ class WebScraper:
                 pass
             self.message_delete = False
 
-
     def send_sinal(self, ultima_pedra):
         self.analisar = False
+
 
         # Escolhe o nome da cor de acordo com o emoji em self.direction_color
         if self.direction_color == "🔴":
