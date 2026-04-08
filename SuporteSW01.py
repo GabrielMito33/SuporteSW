@@ -361,7 +361,7 @@ class WebScraper:
                             self.direction_color = "⚪️"  # Branco
                         
                         print(f"Direção da aposta: {self.direction_color}")
-                        self.send_sinal()
+                        self.send_sinal(finalnum[0])
                         return
                     
                     # Verificar alerta (condições parciais - remover última condição)
