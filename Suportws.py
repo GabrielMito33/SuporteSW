@@ -57,21 +57,21 @@ class WebScraper:
         return False
 
     def results(self):
-    if self.win_results + self.branco_results + self.loss_results != 0:
-        a = (
-            100
-            / (self.win_results + self.branco_results + self.loss_results)
-            * (self.win_results + self.branco_results)
-        )
-    else:
-        a = 0
-    self.win_hate = f"{a:,.2f}%"
-
-    # Não enviar se estiver vazio
-    text = f"""{self.win_hate}"""
-    if text.strip():
-        self.bot.send_message(chat_id=self.chat_id, text=text)
-    return
+        if self.win_results + self.branco_results + self.loss_results != 0:
+            a = (
+                100
+                / (self.win_results + self.branco_results + self.loss_results)
+                * (self.win_results + self.branco_results)
+            )
+        else:
+            a = 0
+        self.win_hate = f"{a:,.2f}%"
+    
+        # Não enviar se estiver vazio
+        text = f"""{self.win_hate}"""
+        if text.strip():
+            self.bot.send_message(chat_id=self.chat_id, text=text)
+        return
 
 def alert_sinal(self):
     text = """ALERTA"""
