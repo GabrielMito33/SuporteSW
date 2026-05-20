@@ -25,7 +25,7 @@ class WebScraper:
     def __init__(self):
         self.game = "Blaze Double"
         self.token = "8645758383:AAG2uD2JaH7f_aMAsyjJm8ivDbvLF4cS5F8" # config
-        self.chat_id = "-1003259195968" # config
+        self.chat_id = "-1003989232913" # config
         self.url_API = "https://blaze.bet.br/api/singleplayer-originals/originals/roulette_games/recent/1"
         self.link = "[Clique aqui!](blaze.com/r/0aJYR6)"
         self.protection = True
@@ -39,6 +39,7 @@ class WebScraper:
         self.analisar = True
         self.direction_color = "None"
         self.message_delete = False
+        self.sinal_message_id = None
         self.bot = telebot.TeleBot(token=self.token, parse_mode="MARKDOWN", disable_web_page_preview=True)
         self.date_now = str(datetime.datetime.now().strftime("%d/%m/%Y"))
         self.check_date = self.date_now
@@ -148,18 +149,33 @@ class WebScraper:
         else:
             cor_texto = "Cor"
 
-        self.bot.send_message(
+        result = self._send_with_retry(
+            self.bot.send_message,
             chat_id=self.chat_id,
-            text=f"🤹🏼‍♀️ *Entrada Confirmada* {self.direction_color}⚪️\n🎯 *SEM GALE*"
+            text=f"""🎯 Entrada confirmada!
+🎲 Apostar no {self.direction_color}
+📢 Proteção no ⚪️""",
         )
+        if result:
+            self.sinal_message_id = result.message_id
         return
+
+    def _reply_to_sinal_kwargs(self):
+        if self.sinal_message_id:
+            return {"reply_to_message_id": self.sinal_message_id}
+        return {}
 
     def martingale(self, result):
         if result == "WIN":
             print(f"WIN")
             self.win_results += 1
             self.max_hate += 1
-            self.bot.send_sticker(self.chat_id, sticker='CAACAgEAAxkBAAMPZrqPFR0VdwEGmMIhUvD-ftVCU9IAAm8CAAIhWPBGBpXDpqXsW8Q1BA')
+            self._send_with_retry(
+                self.bot.send_message,
+                self.chat_id,
+                text="✅ GREEN SEM GALE ✅",
+                **self._reply_to_sinal_kwargs(),
+            )
 
         elif result == "LOSS":
             self.count += 1
@@ -168,7 +184,12 @@ class WebScraper:
                 print(f"LOSS")
                 self.loss_results += 1
                 self.max_hate = 0
-                self.bot.send_sticker(self.chat_id, sticker='CAACAgEAAxkBAAMTZrqPNtuE01MlUnK6yF68sSO6lc0AAsQCAAIEQehG-NlOMcjRGTM1BA')
+                self._send_with_retry(
+                    self.bot.send_message,
+                    self.chat_id,
+                    text="🧨 REED SEM GALE 🧨",
+                    **self._reply_to_sinal_kwargs(),
+                )
 
             else:
                 print(f"Vamos para o {self.count}ª gale!")
@@ -179,7 +200,12 @@ class WebScraper:
             print(f"BRANCO")
             self.branco_results += 1
             self.max_hate += 1
-            self.bot.send_sticker(self.chat_id, sticker='CAACAgEAAxkBAAMPZrqPFR0VdwEGmMIhUvD-ftVCU9IAAm8CAAIhWPBGBpXDpqXsW8Q1BA')
+            self._send_with_retry(
+                self.bot.send_message,
+                self.chat_id,
+                text="⚪️ GREEN BRANCO SEM GALE ⚪️",
+                **self._reply_to_sinal_kwargs(),
+            )
 
         self.count = 0
         self.analisar = True
