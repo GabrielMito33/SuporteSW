@@ -106,19 +106,6 @@ class WebScraper:
         self.win_hate = f"{a:,.2f}%"
 
     def alert_sinal(self):
-        result = self._send_with_retry(
-            self.bot.send_message,
-            self.chat_id,
-            text="""
-⚠️ ANALISANDO, FIQUE ATENTO!!!  
-""",
-        )
-        if result:
-            self.message_ids = result.message_id
-            self.message_delete = True
-            self.telegram_connected = True
-        else:
-            self.message_delete = False
         return
 
     def alert_gale(self):
