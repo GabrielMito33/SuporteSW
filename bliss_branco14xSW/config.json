@@ -7,6 +7,7 @@
         "ausencias_minimas": 0,
         "horarios_personalizados": [4, 7, 10, 13],
         "margem_seguranca": 1
+        "max_sinais_por_dia": 1000
     },
     "api": {
         "url": "https://blaze.bet.br/api/singleplayer-originals/originals/roulette_games/recent/1",
