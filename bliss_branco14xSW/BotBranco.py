@@ -18,7 +18,7 @@ class BotBranco:
         self.ausencias_branco = 0
         self.ultimo_resultado = []
         self.sinal_ativo = False
-        self.horarios_entrada = []  # Lista dos 3 horários de entrada
+        self.horarios_entrada = []  # Lista dos horários de entrada
         self.horario_confirmacao = None  # Horário quando o sinal foi confirmado
         self.sinais_enviados_hoje = 0
         self.data_atual = datetime.date.today()
@@ -48,6 +48,7 @@ class BotBranco:
             self.config = config_data.get('telegram', {})
             self.strategy = config_data.get('strategy', {})
             self.api_config = config_data.get('api', {})
+            self.blaze_link = config_data.get('blaze_link', 'https://blaze.bet.br/r/6jEa6')
             
             # Permitir override por variáveis de ambiente (não logar valores sensíveis)
             token_env = os.environ.get('TELEGRAM_TOKEN')
@@ -78,10 +79,11 @@ class BotBranco:
             },
             "strategy": {
                 "ausencias_minimas": 15,
-                "intervalo_horarios": 3,
+                "horarios_personalizados": [4, 8],
                 "margem_seguranca": 1,
                 "max_sinais_por_dia": 50
             },
+            "blaze_link": "https://blaze.bet.br/r/6jEa6",
             "api": {
                 "url": "https://blaze.bet.br/api/singleplayer-originals/originals/roulette_games/recent/1",
                 "timeout": 10,
@@ -106,9 +108,9 @@ class BotBranco:
         )
     
     def calcular_horarios_entrada(self):
-        """Calcula os 3 horários de entrada baseados na configuração personalizada"""
+        """Calcula os horários de entrada baseados na configuração personalizada"""
         agora = datetime.datetime.now()
-        horarios_config = self.strategy.get('horarios_personalizados', [4, 7, 10])
+        horarios_config = self.strategy.get('horarios_personalizados', [4, 8])
         
         self.horario_confirmacao = agora.replace(second=0, microsecond=0)
         self.horarios_entrada = []
@@ -144,7 +146,7 @@ class BotBranco:
         agora = datetime.datetime.now()
         margem = self.strategy.get('margem_seguranca', 1)
         
-        # Verificar se estamos em algum dos 3 horários (com margem)
+        # Verificar se estamos em algum dos horários (com margem)
         for horario in self.horarios_entrada:
             inicio_janela = horario - datetime.timedelta(minutes=margem)
             fim_janela = horario + datetime.timedelta(minutes=margem)
@@ -184,13 +186,13 @@ class BotBranco:
         else:
             self.fim_ultimo_horario_sinal = None
         
-        mensagem = f"""ENTRADA CONFIRMADA ✅
-⚪️{horarios[0]}
-⚪️{horarios[1]}
-⚪️{horarios[2]}
-{margem} MIN ANTES {margem} MIN DEPOIS
-
-[🎯 BLAZE DOUBLE](https://blaze.bet.br/r/6jEa6)
+        horarios_linhas = "\n".join([f"⏰ {h}" for h in horarios])
+        mensagem = f"""🤍 CHANCE DE BRANCO ⚪️🔥
+🔥 Horários quentes:
+{horarios_linhas}
+⚠️ {margem} min antes e {margem} min depois
+✅ Aproveite!
+[🎰 JOGUE AQUI 👈]({self.blaze_link})
 """
         
         try:
@@ -426,7 +428,7 @@ class BotBranco:
         logging.info("🚀 Iniciando Bot Branco...")
         
         # Exibir configurações
-        horarios_config = self.strategy.get('horarios_personalizados', [4, 7, 10])
+        horarios_config = self.strategy.get('horarios_personalizados', [4, 8])
         print(f"⚪️ Ausências mínimas: {self.strategy.get('ausencias_minimas', 5)}")
         print(f"⏰ Horários: {horarios_config} minutos após confirmação")
         print(f"📍 Margem: {self.strategy.get('margem_seguranca', 1)} minuto(s)")
